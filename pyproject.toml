@@ -1,0 +1,38 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "skimmerdb"
+version = "0.1.0"
+description = "Python client for SkimmerDB: memory, search and analytics for AI agents on S3. Exact and regex search, filters, vectors, SQL."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [{ name = "SkimmerDB" }]
+keywords = ["agent memory", "ai agents", "search", "vector search", "database", "sql", "mcp", "s3", "skimmerdb"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Topic :: Database",
+    "Typing :: Typed",
+]
+dependencies = ["httpx>=0.23,<1", "attrs>=22.2", "typing-extensions>=4.6"]
+
+[project.urls]
+Homepage = "https://skimmerdb.com"
+Documentation = "https://skimmerdb.com/docs"
+"API reference" = "https://skimmerdb.com/docs#reference"
+Pricing = "https://skimmerdb.com/pricing"
+Source = "https://github.com/SkimmerDB/skimmerdb-python"
+Issues = "https://github.com/SkimmerDB/skimmerdb-python/issues"
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["skimmerdb"]
+
+[tool.hatch.build.targets.sdist]
+include = ["skimmerdb", "README.md", "LICENSE", "tests", "examples"]
