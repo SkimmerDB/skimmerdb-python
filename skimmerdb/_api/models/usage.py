@@ -32,7 +32,8 @@ class Usage:
         mcp_queries (int):
         mcp_writes (int):
         embed_tokens (int):
-        cpu_ms (float):
+        cpu_ms (float): CPU queries used (metered; the free plan includes plan.included_cpu_seconds).
+        out_bytes (int): Bytes of answers sent back (metered; the free plan includes plan.included_out_gb).
         stored_bytes (int):
         gb_months (float): Storage so far this period.
         plan (Plan):
@@ -52,6 +53,7 @@ class Usage:
     mcp_writes: int
     embed_tokens: int
     cpu_ms: float
+    out_bytes: int
     stored_bytes: int
     gb_months: float
     plan: Plan
@@ -84,6 +86,8 @@ class Usage:
 
         cpu_ms = self.cpu_ms
 
+        out_bytes = self.out_bytes
+
         stored_bytes = self.stored_bytes
 
         gb_months = self.gb_months
@@ -115,6 +119,7 @@ class Usage:
                 "mcp_writes": mcp_writes,
                 "embed_tokens": embed_tokens,
                 "cpu_ms": cpu_ms,
+                "out_bytes": out_bytes,
                 "stored_bytes": stored_bytes,
                 "gb_months": gb_months,
                 "plan": plan,
@@ -157,6 +162,8 @@ class Usage:
 
         cpu_ms = d.pop("cpu_ms")
 
+        out_bytes = d.pop("out_bytes")
+
         stored_bytes = d.pop("stored_bytes")
 
         gb_months = d.pop("gb_months")
@@ -187,6 +194,7 @@ class Usage:
             mcp_writes=mcp_writes,
             embed_tokens=embed_tokens,
             cpu_ms=cpu_ms,
+            out_bytes=out_bytes,
             stored_bytes=stored_bytes,
             gb_months=gb_months,
             plan=plan,

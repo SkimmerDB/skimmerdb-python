@@ -9,6 +9,7 @@ from attrs import field as _attrs_field
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
+    from ..models.embed_config import EmbedConfig
     from ..models.vector_config import VectorConfig
 
 
@@ -24,6 +25,8 @@ class Namespace:
         bytes_written (int):
         stored_bytes (int): What its objects take in object storage now (metered as storage).
         created_at (str): RFC 3339, UTC.
+        embed (EmbedConfig | Unset): Documents written with text and no vector are embedded with this model (with the
+            tenant's own provider key, or hosted); search takes semantic.
         vector (VectorConfig | Unset):
     """
 
@@ -32,6 +35,7 @@ class Namespace:
     bytes_written: int
     stored_bytes: int
     created_at: str
+    embed: EmbedConfig | Unset = UNSET
     vector: VectorConfig | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -45,6 +49,10 @@ class Namespace:
         stored_bytes = self.stored_bytes
 
         created_at = self.created_at
+
+        embed: dict[str, Any] | Unset = UNSET
+        if not isinstance(self.embed, Unset):
+            embed = self.embed.to_dict()
 
         vector: dict[str, Any] | Unset = UNSET
         if not isinstance(self.vector, Unset):
@@ -61,6 +69,8 @@ class Namespace:
                 "created_at": created_at,
             }
         )
+        if embed is not UNSET:
+            field_dict["embed"] = embed
         if vector is not UNSET:
             field_dict["vector"] = vector
 
@@ -68,6 +78,7 @@ class Namespace:
 
     @classmethod
     def from_dict(cls, src_dict: Mapping[str, Any]) -> Self:
+        from ..models.embed_config import EmbedConfig
         from ..models.vector_config import VectorConfig
 
         d = dict(src_dict)
@@ -80,6 +91,13 @@ class Namespace:
         stored_bytes = d.pop("stored_bytes")
 
         created_at = d.pop("created_at")
+
+        _embed = d.pop("embed", UNSET)
+        embed: EmbedConfig | Unset
+        if isinstance(_embed, Unset):
+            embed = UNSET
+        else:
+            embed = EmbedConfig.from_dict(_embed)
 
         _vector = d.pop("vector", UNSET)
         vector: VectorConfig | Unset
@@ -94,6 +112,7 @@ class Namespace:
             bytes_written=bytes_written,
             stored_bytes=stored_bytes,
             created_at=created_at,
+            embed=embed,
             vector=vector,
         )
 

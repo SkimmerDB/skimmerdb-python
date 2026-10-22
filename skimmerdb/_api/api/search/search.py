@@ -77,6 +77,11 @@ def _parse_response(
 
         return response_429
 
+    if response.status_code == 502:
+        response_502 = Error.from_dict(response.json())
+
+        return response_502
+
     if response.status_code == 503:
         response_503 = Error.from_dict(response.json())
 

@@ -19,6 +19,9 @@ class WriteResult:
         deleted (int):
         version (int):
         stored_bytes (int):
+        took_ms (int | Unset): NDJSON streams: milliseconds.
+        lines (int | Unset): NDJSON streams: lines read.
+        batches (int | Unset): NDJSON streams: batches written.
         created (bool | Unset): The namespace didn't exist: this write made it (with vectors of the first vector's
             length, cosine, when the documents have vectors; else text only). Check it to catch a mistyped name.
     """
@@ -27,6 +30,9 @@ class WriteResult:
     deleted: int
     version: int
     stored_bytes: int
+    took_ms: int | Unset = UNSET
+    lines: int | Unset = UNSET
+    batches: int | Unset = UNSET
     created: bool | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -38,6 +44,12 @@ class WriteResult:
         version = self.version
 
         stored_bytes = self.stored_bytes
+
+        took_ms = self.took_ms
+
+        lines = self.lines
+
+        batches = self.batches
 
         created = self.created
 
@@ -51,6 +63,12 @@ class WriteResult:
                 "stored_bytes": stored_bytes,
             }
         )
+        if took_ms is not UNSET:
+            field_dict["took_ms"] = took_ms
+        if lines is not UNSET:
+            field_dict["lines"] = lines
+        if batches is not UNSET:
+            field_dict["batches"] = batches
         if created is not UNSET:
             field_dict["created"] = created
 
@@ -67,6 +85,12 @@ class WriteResult:
 
         stored_bytes = d.pop("stored_bytes")
 
+        took_ms = d.pop("took_ms", UNSET)
+
+        lines = d.pop("lines", UNSET)
+
+        batches = d.pop("batches", UNSET)
+
         created = d.pop("created", UNSET)
 
         write_result = cls(
@@ -74,6 +98,9 @@ class WriteResult:
             deleted=deleted,
             version=version,
             stored_bytes=stored_bytes,
+            took_ms=took_ms,
+            lines=lines,
+            batches=batches,
             created=created,
         )
 

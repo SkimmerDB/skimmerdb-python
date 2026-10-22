@@ -24,6 +24,7 @@ class UsageDay:
         mcp_writes (int):
         embed_tokens (int):
         cpu_ms (float):
+        out_bytes (int):
         gb_months (float):
     """
 
@@ -38,6 +39,7 @@ class UsageDay:
     mcp_writes: int
     embed_tokens: int
     cpu_ms: float
+    out_bytes: int
     gb_months: float
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -64,6 +66,8 @@ class UsageDay:
 
         cpu_ms = self.cpu_ms
 
+        out_bytes = self.out_bytes
+
         gb_months = self.gb_months
 
         field_dict: dict[str, Any] = {}
@@ -81,6 +85,7 @@ class UsageDay:
                 "mcp_writes": mcp_writes,
                 "embed_tokens": embed_tokens,
                 "cpu_ms": cpu_ms,
+                "out_bytes": out_bytes,
                 "gb_months": gb_months,
             }
         )
@@ -112,6 +117,8 @@ class UsageDay:
 
         cpu_ms = d.pop("cpu_ms")
 
+        out_bytes = d.pop("out_bytes")
+
         gb_months = d.pop("gb_months")
 
         usage_day = cls(
@@ -126,6 +133,7 @@ class UsageDay:
             mcp_writes=mcp_writes,
             embed_tokens=embed_tokens,
             cpu_ms=cpu_ms,
+            out_bytes=out_bytes,
             gb_months=gb_months,
         )
 

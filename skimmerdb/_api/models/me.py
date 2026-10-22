@@ -28,6 +28,7 @@ class Me:
         key_id (int): The key used (0: a login).
         namespaces (list[str]):
         is_admin (bool):
+        email_verified (bool): false: until verified, a free tenant has 1% of the plan (plan shows what applies now).
     """
 
     id: int
@@ -41,6 +42,7 @@ class Me:
     key_id: int
     namespaces: list[str]
     is_admin: bool
+    email_verified: bool
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -66,6 +68,8 @@ class Me:
 
         is_admin = self.is_admin
 
+        email_verified = self.email_verified
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -81,6 +85,7 @@ class Me:
                 "key_id": key_id,
                 "namespaces": namespaces,
                 "is_admin": is_admin,
+                "email_verified": email_verified,
             }
         )
 
@@ -113,6 +118,8 @@ class Me:
 
         is_admin = d.pop("is_admin")
 
+        email_verified = d.pop("email_verified")
+
         me = cls(
             id=id,
             email=email,
@@ -125,6 +132,7 @@ class Me:
             key_id=key_id,
             namespaces=namespaces,
             is_admin=is_admin,
+            email_verified=email_verified,
         )
 
         me.additional_properties = d

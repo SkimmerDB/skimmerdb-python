@@ -69,11 +69,11 @@ def sync_detailed(
 
      For Claude, ChatGPT, Codex, Cursor and other agents: JSON-RPC 2.0 (initialize, tools/list,
     tools/call). Tools: list_namespaces, create_namespace, delete_namespace, write_documents,
-    delete_documents, search, sql_query, count, get_document, warm_namespace; each runs the same code,
-    limits and metering as its REST call (metered apart as mcp_queries / mcp_writes). Agents sign in
-    with OAuth 2.1 (discovery from the 401's WWW-Authenticate, dynamic registration, PKCE); API keys
-    work too. Connect: claude mcp add --transport http skimmerdb https://api.skimmerdb.com/mcp
-    (https://skimmerdb.com/mcp is the same endpoint).
+    delete_documents, search, sql_query, create_view, list_views, delete_view, count, get_document,
+    warm_namespace; each runs the same code, limits and metering as its REST call (metered apart as
+    mcp_queries / mcp_writes). Agents sign in with OAuth 2.1 (discovery from the 401's WWW-Authenticate,
+    dynamic registration, PKCE); API keys work too. Connect: claude mcp add --transport http skimmerdb
+    https://api.skimmerdb.com/mcp (https://skimmerdb.com/mcp is the same endpoint).
 
     Args:
         body (JsonRpcRequest):
@@ -106,11 +106,11 @@ def sync(
 
      For Claude, ChatGPT, Codex, Cursor and other agents: JSON-RPC 2.0 (initialize, tools/list,
     tools/call). Tools: list_namespaces, create_namespace, delete_namespace, write_documents,
-    delete_documents, search, sql_query, count, get_document, warm_namespace; each runs the same code,
-    limits and metering as its REST call (metered apart as mcp_queries / mcp_writes). Agents sign in
-    with OAuth 2.1 (discovery from the 401's WWW-Authenticate, dynamic registration, PKCE); API keys
-    work too. Connect: claude mcp add --transport http skimmerdb https://api.skimmerdb.com/mcp
-    (https://skimmerdb.com/mcp is the same endpoint).
+    delete_documents, search, sql_query, create_view, list_views, delete_view, count, get_document,
+    warm_namespace; each runs the same code, limits and metering as its REST call (metered apart as
+    mcp_queries / mcp_writes). Agents sign in with OAuth 2.1 (discovery from the 401's WWW-Authenticate,
+    dynamic registration, PKCE); API keys work too. Connect: claude mcp add --transport http skimmerdb
+    https://api.skimmerdb.com/mcp (https://skimmerdb.com/mcp is the same endpoint).
 
     Args:
         body (JsonRpcRequest):
@@ -138,11 +138,11 @@ async def asyncio_detailed(
 
      For Claude, ChatGPT, Codex, Cursor and other agents: JSON-RPC 2.0 (initialize, tools/list,
     tools/call). Tools: list_namespaces, create_namespace, delete_namespace, write_documents,
-    delete_documents, search, sql_query, count, get_document, warm_namespace; each runs the same code,
-    limits and metering as its REST call (metered apart as mcp_queries / mcp_writes). Agents sign in
-    with OAuth 2.1 (discovery from the 401's WWW-Authenticate, dynamic registration, PKCE); API keys
-    work too. Connect: claude mcp add --transport http skimmerdb https://api.skimmerdb.com/mcp
-    (https://skimmerdb.com/mcp is the same endpoint).
+    delete_documents, search, sql_query, create_view, list_views, delete_view, count, get_document,
+    warm_namespace; each runs the same code, limits and metering as its REST call (metered apart as
+    mcp_queries / mcp_writes). Agents sign in with OAuth 2.1 (discovery from the 401's WWW-Authenticate,
+    dynamic registration, PKCE); API keys work too. Connect: claude mcp add --transport http skimmerdb
+    https://api.skimmerdb.com/mcp (https://skimmerdb.com/mcp is the same endpoint).
 
     Args:
         body (JsonRpcRequest):
@@ -173,11 +173,11 @@ async def asyncio(
 
      For Claude, ChatGPT, Codex, Cursor and other agents: JSON-RPC 2.0 (initialize, tools/list,
     tools/call). Tools: list_namespaces, create_namespace, delete_namespace, write_documents,
-    delete_documents, search, sql_query, count, get_document, warm_namespace; each runs the same code,
-    limits and metering as its REST call (metered apart as mcp_queries / mcp_writes). Agents sign in
-    with OAuth 2.1 (discovery from the 401's WWW-Authenticate, dynamic registration, PKCE); API keys
-    work too. Connect: claude mcp add --transport http skimmerdb https://api.skimmerdb.com/mcp
-    (https://skimmerdb.com/mcp is the same endpoint).
+    delete_documents, search, sql_query, create_view, list_views, delete_view, count, get_document,
+    warm_namespace; each runs the same code, limits and metering as its REST call (metered apart as
+    mcp_queries / mcp_writes). Agents sign in with OAuth 2.1 (discovery from the 401's WWW-Authenticate,
+    dynamic registration, PKCE); API keys work too. Connect: claude mcp add --transport http skimmerdb
+    https://api.skimmerdb.com/mcp (https://skimmerdb.com/mcp is the same endpoint).
 
     Args:
         body (JsonRpcRequest):

@@ -19,10 +19,14 @@ T = TypeVar("T", bound="Document")
 class Document:
     """
     Attributes:
-        id (str): Any string up to 512 bytes, one line. Writing an id again replaces the document.
-        text (str | Unset): Up to 2 MB. May be left out when the document has a vector.
-        meta (DocumentMeta | Unset): Metadata: a JSON object of strings, numbers and booleans you can filter on (up to
-            16 KB).
+        id (str): Any string up to 512 bytes, one line (slashes allowed). Writing an id again replaces the document, so
+            use a stable natural key (ticket-1042, docs/install.md#3, agent-1/run-42/step-3): retries are then safe.
+        text (str | Unset): What q searches (exact text and regex): up to 2 MB. May be left out when the document has a
+            vector.
+        meta (DocumentMeta | Unset): Metadata: a JSON object of strings, numbers and booleans you filter, group and sort
+            by (up to 16 KB); its top-level keys are SQL columns. Keep it flat (nested objects and arrays can't be
+            filtered), one type per key, times as integer seconds (ranges and DATE_TRUNC need numbers). Not searched by q:
+            put searchable words in text.
         vector (list[float] | Unset): An embedding: as many numbers as the namespace's dims.
         vector_b64 (str | Unset): The vector as base64 of little-endian float32s (smaller than JSON numbers).
     """

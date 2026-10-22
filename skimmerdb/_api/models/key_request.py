@@ -18,9 +18,9 @@ class KeyRequest:
     Attributes:
         name (str | Unset): A label (default: default).
         scope (KeyRequestScope | Unset): read: list namespaces, search, count, get documents, warm, SQL, usage. write:
-            also create and delete namespaces, write, update, delete and import documents. admin: also make, list, change
-            and revoke keys, and billing. Only an admin key without namespace limits or caps (or the owner's login) can
-            manage keys, so a read or write key can't make more. Default: 'write'.
+            also create and delete namespaces and views, write, update, delete and import documents. admin: also make, list,
+            change and revoke keys, and billing. Only an admin key without namespace limits or caps (or the owner's login)
+            can manage keys, so a read or write key can't make more. Default: 'write'.
         namespaces (list[str] | Unset): The namespaces the key may use: names or prefix* (default: all).
         rate_per_s (int | Unset): Requests a second (0: no cap of its own).
         cap_queries (int | Unset): Queries a billing period (0: none).

@@ -11,7 +11,11 @@ T = TypeVar("T", bound="DocumentMeta")
 
 @_attrs_define
 class DocumentMeta:
-    """Metadata: a JSON object of strings, numbers and booleans you can filter on (up to 16 KB)."""
+    """Metadata: a JSON object of strings, numbers and booleans you filter, group and sort by (up to 16 KB); its top-level
+    keys are SQL columns. Keep it flat (nested objects and arrays can't be filtered), one type per key, times as integer
+    seconds (ranges and DATE_TRUNC need numbers). Not searched by q: put searchable words in text.
+
+    """
 
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 

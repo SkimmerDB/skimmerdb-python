@@ -22,12 +22,22 @@ class Error:
     Attributes:
         error (str): What went wrong, in a sentence.
         code (str): A word to act on. By status: bad_request (400), unauthorized (401), payment_required (402),
-            forbidden (403), not_found (404), conflict (409), too_large (413), invalid (422; fields says which),
-            rate_limited (429), internal (500), not_implemented (501), bad_gateway (502), unavailable (503), quota_full
-            (507). More precise ones: namespace_limit (402: the plan's namespace count), query_timeout (422: past the plan's
-            time limit), scan_refused (422: a regex the index can't narrow on a big namespace; send scan: true), write_busy
-            (429: writes arrive faster than the namespace commits them; nothing was written), write_unknown (503: the write
-            may or may not have been applied; retrying is safe).
+            forbidden (403), not_found (404), conflict (409), gone (410), too_large (413), range_not_satisfiable (416),
+            invalid (422; fields says which), rate_limited (429), internal (500), not_implemented (501), bad_gateway (502),
+            unavailable (503), quota_full (507). More precise ones: namespace_limit (402: the plan's namespace count, or its
+            namespaces made today), email_unverified (402: a free tenant whose owner hasn't verified their email has 1% of
+            the plan; verify it), query_timeout (422: past the plan's time limit), scan_refused (422: a regex the index
+            can't narrow on a big namespace; send scan: true), write_busy (429: writes arrive faster than the namespace
+            commits them; nothing was written), out_budget (a streamed answer's last NDJSON line: the free plan's bytes
+            returned ran out), too_many_rows (a streamed answer's last NDJSON line: a held answer passed its row cap),
+            export_limit (402: the plan's exports a day), write_unknown (503: the write may or may not have been applied;
+            retrying is safe), embedding_key_missing (422: the namespace embeds with a provider the tenant has no key for),
+            payment_required (402: also the free plan's hosted embedding tokens), embedding_key_invalid (422: the provider
+            refused the tenant's key), embedding_rejected (422: the provider refused the request, e.g. an unknown model),
+            embedding_dims (409: the model can't make vectors of the namespace's length), embedding_rate_limited (429: the
+            provider is rate-limiting the tenant's key; retry_after), embedding_failed (502: the provider failed; nothing
+            was written, retry), view_not_decomposable (422: a view's query can't run from per-segment parts; the message
+            says why), view_limit (402: the plan's view count; 422: a namespace's 20).
         fields (ErrorFields | Unset): invalid: field -> what's wrong with it.
         retry_after (int | Unset): write_busy: seconds to wait (as Retry-After).
     """

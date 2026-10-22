@@ -9,6 +9,7 @@ from attrs import field as _attrs_field
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
+    from ..models.embed_config import EmbedConfig
     from ..models.vector_config import VectorConfig
 
 
@@ -21,10 +22,13 @@ class CreateNamespace:
     Attributes:
         name (str): 1 to 64 of a-z, 0-9, '-', '_' and '.'.
         vector (VectorConfig | Unset):
+        embed (EmbedConfig | Unset): Documents written with text and no vector are embedded with this model (with the
+            tenant's own provider key, or hosted); search takes semantic.
     """
 
     name: str
     vector: VectorConfig | Unset = UNSET
+    embed: EmbedConfig | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -33,6 +37,10 @@ class CreateNamespace:
         vector: dict[str, Any] | Unset = UNSET
         if not isinstance(self.vector, Unset):
             vector = self.vector.to_dict()
+
+        embed: dict[str, Any] | Unset = UNSET
+        if not isinstance(self.embed, Unset):
+            embed = self.embed.to_dict()
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -43,11 +51,14 @@ class CreateNamespace:
         )
         if vector is not UNSET:
             field_dict["vector"] = vector
+        if embed is not UNSET:
+            field_dict["embed"] = embed
 
         return field_dict
 
     @classmethod
     def from_dict(cls, src_dict: Mapping[str, Any]) -> Self:
+        from ..models.embed_config import EmbedConfig
         from ..models.vector_config import VectorConfig
 
         d = dict(src_dict)
@@ -60,9 +71,17 @@ class CreateNamespace:
         else:
             vector = VectorConfig.from_dict(_vector)
 
+        _embed = d.pop("embed", UNSET)
+        embed: EmbedConfig | Unset
+        if isinstance(_embed, Unset):
+            embed = UNSET
+        else:
+            embed = EmbedConfig.from_dict(_embed)
+
         create_namespace = cls(
             name=name,
             vector=vector,
+            embed=embed,
         )
 
         create_namespace.additional_properties = d

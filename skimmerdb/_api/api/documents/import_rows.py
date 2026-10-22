@@ -20,6 +20,7 @@ def _get_kwargs(
     id: str | Unset = UNSET,
     text: str | Unset = UNSET,
     schema: str | Unset = UNSET,
+    url_query: str | Unset = UNSET,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
 
@@ -36,6 +37,8 @@ def _get_kwargs(
     params["text"] = text
 
     params["schema"] = schema
+
+    params["url"] = url_query
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
@@ -138,12 +141,15 @@ def sync_detailed(
     id: str | Unset = UNSET,
     text: str | Unset = UNSET,
     schema: str | Unset = UNSET,
+    url_query: str | Unset = UNSET,
 ) -> Response[Error | ImportResult]:
     """Bulk import a file
 
-     CSV, NDJSON or Parquet as the request body (up to 2 GB and 1M rows), parsed straight into one
-    segment: all rows become visible together, or none. A namespace that doesn't exist is made by the
-    import (text only; created: true). Metered as a write of that many documents and the file's bytes.
+     CSV, NDJSON or Parquet as the request body, or fetched from ?url= (https only: a presigned S3 / GCS
+    URL or any public server; private, loopback, link-local and metadata addresses are refused, after
+    redirects too), up to 2 GB, parsed straight into columns, in segments of up to 1M rows: all rows
+    become visible together, or none. A namespace that doesn't exist is made by the import (text only;
+    created: true). Metered as a write of that many documents and the file's bytes.
 
     Args:
         name (str):
@@ -151,6 +157,7 @@ def sync_detailed(
         id (str | Unset):
         text (str | Unset):
         schema (str | Unset):
+        url_query (str | Unset):
         body (File):
 
     Raises:
@@ -168,6 +175,7 @@ def sync_detailed(
         id=id,
         text=text,
         schema=schema,
+        url_query=url_query,
     )
 
     response = client.get_httpx_client().request(
@@ -186,12 +194,15 @@ def sync(
     id: str | Unset = UNSET,
     text: str | Unset = UNSET,
     schema: str | Unset = UNSET,
+    url_query: str | Unset = UNSET,
 ) -> Error | ImportResult | None:
     """Bulk import a file
 
-     CSV, NDJSON or Parquet as the request body (up to 2 GB and 1M rows), parsed straight into one
-    segment: all rows become visible together, or none. A namespace that doesn't exist is made by the
-    import (text only; created: true). Metered as a write of that many documents and the file's bytes.
+     CSV, NDJSON or Parquet as the request body, or fetched from ?url= (https only: a presigned S3 / GCS
+    URL or any public server; private, loopback, link-local and metadata addresses are refused, after
+    redirects too), up to 2 GB, parsed straight into columns, in segments of up to 1M rows: all rows
+    become visible together, or none. A namespace that doesn't exist is made by the import (text only;
+    created: true). Metered as a write of that many documents and the file's bytes.
 
     Args:
         name (str):
@@ -199,6 +210,7 @@ def sync(
         id (str | Unset):
         text (str | Unset):
         schema (str | Unset):
+        url_query (str | Unset):
         body (File):
 
     Raises:
@@ -217,6 +229,7 @@ def sync(
         id=id,
         text=text,
         schema=schema,
+        url_query=url_query,
     ).parsed
 
 
@@ -229,12 +242,15 @@ async def asyncio_detailed(
     id: str | Unset = UNSET,
     text: str | Unset = UNSET,
     schema: str | Unset = UNSET,
+    url_query: str | Unset = UNSET,
 ) -> Response[Error | ImportResult]:
     """Bulk import a file
 
-     CSV, NDJSON or Parquet as the request body (up to 2 GB and 1M rows), parsed straight into one
-    segment: all rows become visible together, or none. A namespace that doesn't exist is made by the
-    import (text only; created: true). Metered as a write of that many documents and the file's bytes.
+     CSV, NDJSON or Parquet as the request body, or fetched from ?url= (https only: a presigned S3 / GCS
+    URL or any public server; private, loopback, link-local and metadata addresses are refused, after
+    redirects too), up to 2 GB, parsed straight into columns, in segments of up to 1M rows: all rows
+    become visible together, or none. A namespace that doesn't exist is made by the import (text only;
+    created: true). Metered as a write of that many documents and the file's bytes.
 
     Args:
         name (str):
@@ -242,6 +258,7 @@ async def asyncio_detailed(
         id (str | Unset):
         text (str | Unset):
         schema (str | Unset):
+        url_query (str | Unset):
         body (File):
 
     Raises:
@@ -259,6 +276,7 @@ async def asyncio_detailed(
         id=id,
         text=text,
         schema=schema,
+        url_query=url_query,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -275,12 +293,15 @@ async def asyncio(
     id: str | Unset = UNSET,
     text: str | Unset = UNSET,
     schema: str | Unset = UNSET,
+    url_query: str | Unset = UNSET,
 ) -> Error | ImportResult | None:
     """Bulk import a file
 
-     CSV, NDJSON or Parquet as the request body (up to 2 GB and 1M rows), parsed straight into one
-    segment: all rows become visible together, or none. A namespace that doesn't exist is made by the
-    import (text only; created: true). Metered as a write of that many documents and the file's bytes.
+     CSV, NDJSON or Parquet as the request body, or fetched from ?url= (https only: a presigned S3 / GCS
+    URL or any public server; private, loopback, link-local and metadata addresses are refused, after
+    redirects too), up to 2 GB, parsed straight into columns, in segments of up to 1M rows: all rows
+    become visible together, or none. A namespace that doesn't exist is made by the import (text only;
+    created: true). Metered as a write of that many documents and the file's bytes.
 
     Args:
         name (str):
@@ -288,6 +309,7 @@ async def asyncio(
         id (str | Unset):
         text (str | Unset):
         schema (str | Unset):
+        url_query (str | Unset):
         body (File):
 
     Raises:
@@ -307,5 +329,6 @@ async def asyncio(
             id=id,
             text=text,
             schema=schema,
+            url_query=url_query,
         )
     ).parsed

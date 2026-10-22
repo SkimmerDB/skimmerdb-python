@@ -59,7 +59,7 @@ It talks to `https://api.skimmerdb.com`; point it at another server with `base_u
 
 ## The whole API
 
-Every operation in the [API reference](https://skimmerdb.com/docs#reference) is generated
+Every operation in the [API reference](https://docs.skimmerdb.com/api) is generated
 from the [OpenAPI document](https://api.skimmerdb.com/openapi.json) into `skimmerdb._api`
 (httpx, attrs models, sync and async), named by its operationId:
 

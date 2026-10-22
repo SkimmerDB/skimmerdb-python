@@ -27,6 +27,8 @@ class SearchRequest:
             {"status": {"in": [...]}} one of; {"priority": {"gte": 2, "lt": 5}} a numeric range (gt, gte, lt, lte); {"team":
             {"ne": "api"}} not equal (a missing key counts as not equal). Numbers compare as numbers.
         limit (int | Unset): Hits a page (20; vector search 10).
+        semantic (str | Unset): Search by meaning with a text, in a namespace with an embedding model (embed): it is
+            embedded with that model and the tenant's key, then searched like vector (q and filter narrow it).
         cursor (str | Unset): The next of the previous page.
         scan (bool | Unset): Allow a regex the index can't narrow to scan a big namespace (otherwise 422 scan_refused).
             Default: False.
@@ -41,6 +43,7 @@ class SearchRequest:
     regex: bool | Unset = False
     filter_: Filter | Unset = UNSET
     limit: int | Unset = UNSET
+    semantic: str | Unset = UNSET
     cursor: str | Unset = UNSET
     scan: bool | Unset = False
     vector: list[float] | Unset = UNSET
@@ -60,6 +63,8 @@ class SearchRequest:
             filter_ = self.filter_.to_dict()
 
         limit = self.limit
+
+        semantic = self.semantic
 
         cursor = self.cursor
 
@@ -88,6 +93,8 @@ class SearchRequest:
             field_dict["filter"] = filter_
         if limit is not UNSET:
             field_dict["limit"] = limit
+        if semantic is not UNSET:
+            field_dict["semantic"] = semantic
         if cursor is not UNSET:
             field_dict["cursor"] = cursor
         if scan is not UNSET:
@@ -123,6 +130,8 @@ class SearchRequest:
 
         limit = d.pop("limit", UNSET)
 
+        semantic = d.pop("semantic", UNSET)
+
         cursor = d.pop("cursor", UNSET)
 
         scan = d.pop("scan", UNSET)
@@ -142,6 +151,7 @@ class SearchRequest:
             regex=regex,
             filter_=filter_,
             limit=limit,
+            semantic=semantic,
             cursor=cursor,
             scan=scan,
             vector=vector,

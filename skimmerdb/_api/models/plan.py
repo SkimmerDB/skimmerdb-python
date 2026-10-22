@@ -34,6 +34,16 @@ class Plan:
         sql_concurrency (int):
         query_seconds (int):
         max_namespaces (int):
+        included_cpu_seconds (float):
+        included_store_gets (int):
+        included_out_gb (float):
+        max_creates_day (int):
+        unverified_share (float):
+        max_views (int):
+        export_seconds (int):
+        export_concurrency (int):
+        exports_day (int):
+        export_max_gb (float):
     """
 
     name: str
@@ -57,6 +67,16 @@ class Plan:
     sql_concurrency: int
     query_seconds: int
     max_namespaces: int
+    included_cpu_seconds: float
+    included_store_gets: int
+    included_out_gb: float
+    max_creates_day: int
+    unverified_share: float
+    max_views: int
+    export_seconds: int
+    export_concurrency: int
+    exports_day: int
+    export_max_gb: float
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -102,6 +122,26 @@ class Plan:
 
         max_namespaces = self.max_namespaces
 
+        included_cpu_seconds = self.included_cpu_seconds
+
+        included_store_gets = self.included_store_gets
+
+        included_out_gb = self.included_out_gb
+
+        max_creates_day = self.max_creates_day
+
+        unverified_share = self.unverified_share
+
+        max_views = self.max_views
+
+        export_seconds = self.export_seconds
+
+        export_concurrency = self.export_concurrency
+
+        exports_day = self.exports_day
+
+        export_max_gb = self.export_max_gb
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -127,6 +167,16 @@ class Plan:
                 "sql_concurrency": sql_concurrency,
                 "query_seconds": query_seconds,
                 "max_namespaces": max_namespaces,
+                "included_cpu_seconds": included_cpu_seconds,
+                "included_store_gets": included_store_gets,
+                "included_out_gb": included_out_gb,
+                "max_creates_day": max_creates_day,
+                "unverified_share": unverified_share,
+                "max_views": max_views,
+                "export_seconds": export_seconds,
+                "export_concurrency": export_concurrency,
+                "exports_day": exports_day,
+                "export_max_gb": export_max_gb,
             }
         )
 
@@ -177,6 +227,26 @@ class Plan:
 
         max_namespaces = d.pop("max_namespaces")
 
+        included_cpu_seconds = d.pop("included_cpu_seconds")
+
+        included_store_gets = d.pop("included_store_gets")
+
+        included_out_gb = d.pop("included_out_gb")
+
+        max_creates_day = d.pop("max_creates_day")
+
+        unverified_share = d.pop("unverified_share")
+
+        max_views = d.pop("max_views")
+
+        export_seconds = d.pop("export_seconds")
+
+        export_concurrency = d.pop("export_concurrency")
+
+        exports_day = d.pop("exports_day")
+
+        export_max_gb = d.pop("export_max_gb")
+
         plan = cls(
             name=name,
             price_month=price_month,
@@ -199,6 +269,16 @@ class Plan:
             sql_concurrency=sql_concurrency,
             query_seconds=query_seconds,
             max_namespaces=max_namespaces,
+            included_cpu_seconds=included_cpu_seconds,
+            included_store_gets=included_store_gets,
+            included_out_gb=included_out_gb,
+            max_creates_day=max_creates_day,
+            unverified_share=unverified_share,
+            max_views=max_views,
+            export_seconds=export_seconds,
+            export_concurrency=export_concurrency,
+            exports_day=exports_day,
+            export_max_gb=export_max_gb,
         )
 
         plan.additional_properties = d

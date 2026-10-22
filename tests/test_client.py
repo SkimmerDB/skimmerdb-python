@@ -117,3 +117,18 @@ def test_errors_and_the_generated_layer(db: SkimmerDB):
     # every operation is there, generated: here search by hand
     res = raw_search.sync(name="support", client=db.api, body=SearchRequest(q="refund"))
     assert [h.id for h in res.hits] == ["t-1"]
+
+
+def test_streams_and_exports(db: SkimmerDB, tmp_path):
+    ns = db.namespace("bulk")
+    w = ns.write_stream(({"id": f"b-{i}", "text": f"row {i}", "meta": {"n": i}} for i in range(12000)), wait=True)
+    assert w["written"] == 12000 and w["batches"] >= 1
+    rows = list(ns.sql_rows("SELECT id, n FROM docs"))
+    assert len(rows) == 12000 and {r["n"] for r in rows} == set(range(12000))
+    assert sum(1 for _ in db.sql_rows("SELECT id FROM bulk WHERE n < 100")) == 100
+    e = db.wait_export(db.export("SELECT id, n FROM bulk WHERE n < 5000", format="ndjson").id)
+    path = tmp_path / "out.ndjson"
+    assert db.download_export(e.id, str(path)) == e.bytes
+    assert len(path.read_text().splitlines()) == 5000
+    with pytest.raises(SkimmerDBError):
+        list(ns.sql_rows("SELECT nope FROM docs"))

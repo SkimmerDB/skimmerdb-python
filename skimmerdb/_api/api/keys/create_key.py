@@ -78,9 +78,10 @@ def sync_detailed(
     """Make an API key
 
      The key is in the answer only. Scopes: read: list namespaces, search, count, get documents, warm,
-    SQL, usage. write: also create and delete namespaces, write, update, delete and import documents.
-    admin: also make, list, change and revoke keys, and billing. Only an admin key without namespace
-    limits or caps (or the owner's login) can manage keys, so a read or write key can't make more.
+    SQL, usage. write: also create and delete namespaces and views, write, update, delete and import
+    documents. admin: also make, list, change and revoke keys, and billing. Only an admin key without
+    namespace limits or caps (or the owner's login) can manage keys, so a read or write key can't make
+    more.
 
     Args:
         body (KeyRequest):
@@ -112,9 +113,10 @@ def sync(
     """Make an API key
 
      The key is in the answer only. Scopes: read: list namespaces, search, count, get documents, warm,
-    SQL, usage. write: also create and delete namespaces, write, update, delete and import documents.
-    admin: also make, list, change and revoke keys, and billing. Only an admin key without namespace
-    limits or caps (or the owner's login) can manage keys, so a read or write key can't make more.
+    SQL, usage. write: also create and delete namespaces and views, write, update, delete and import
+    documents. admin: also make, list, change and revoke keys, and billing. Only an admin key without
+    namespace limits or caps (or the owner's login) can manage keys, so a read or write key can't make
+    more.
 
     Args:
         body (KeyRequest):
@@ -141,9 +143,10 @@ async def asyncio_detailed(
     """Make an API key
 
      The key is in the answer only. Scopes: read: list namespaces, search, count, get documents, warm,
-    SQL, usage. write: also create and delete namespaces, write, update, delete and import documents.
-    admin: also make, list, change and revoke keys, and billing. Only an admin key without namespace
-    limits or caps (or the owner's login) can manage keys, so a read or write key can't make more.
+    SQL, usage. write: also create and delete namespaces and views, write, update, delete and import
+    documents. admin: also make, list, change and revoke keys, and billing. Only an admin key without
+    namespace limits or caps (or the owner's login) can manage keys, so a read or write key can't make
+    more.
 
     Args:
         body (KeyRequest):
@@ -173,9 +176,10 @@ async def asyncio(
     """Make an API key
 
      The key is in the answer only. Scopes: read: list namespaces, search, count, get documents, warm,
-    SQL, usage. write: also create and delete namespaces, write, update, delete and import documents.
-    admin: also make, list, change and revoke keys, and billing. Only an admin key without namespace
-    limits or caps (or the owner's login) can manage keys, so a read or write key can't make more.
+    SQL, usage. write: also create and delete namespaces and views, write, update, delete and import
+    documents. admin: also make, list, change and revoke keys, and billing. Only an admin key without
+    namespace limits or caps (or the owner's login) can manage keys, so a read or write key can't make
+    more.
 
     Args:
         body (KeyRequest):

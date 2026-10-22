@@ -9,21 +9,29 @@ from ...client import AuthenticatedClient, Client
 from ...models.error import Error
 from ...models.write_request import WriteRequest
 from ...models.write_result import WriteResult
-from ...types import Response
+from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     name: str,
     *,
     body: WriteRequest,
+    wait: bool | Unset = UNSET,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
+
+    params: dict[str, Any] = {}
+
+    params["wait"] = wait
+
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     _kwargs: dict[str, Any] = {
         "method": "post",
         "url": "/v1/namespaces/{name}/docs".format(
             name=quote(str(name), safe=""),
         ),
+        "params": params,
     }
 
     _kwargs["json"] = body.to_dict()
@@ -82,6 +90,11 @@ def _parse_response(
 
         return response_429
 
+    if response.status_code == 502:
+        response_502 = Error.from_dict(response.json())
+
+        return response_502
+
     if response.status_code == 503:
         response_503 = Error.from_dict(response.json())
 
@@ -114,6 +127,7 @@ def sync_detailed(
     *,
     client: AuthenticatedClient | Client,
     body: WriteRequest,
+    wait: bool | Unset = UNSET,
 ) -> Response[Error | WriteResult]:
     """Write documents
 
@@ -122,10 +136,13 @@ def sync_detailed(
     answers once it's searchable here. A namespace that doesn't exist is made by the write (created:
     true in the answer): with vectors of the first vector's length and cosine when the documents have
     vectors, else text only (create it first for euclidean); past the plan's namespace count, 402
-    namespace_limit. Metered as documents written and bytes written (see Usage).
+    namespace_limit. Metered as documents written and bytes written (see Usage). With Content-Type
+    application/x-ndjson the body is one document a line (up to 16 MB; any length: POST
+    .../docs/stream).
 
     Args:
         name (str):
+        wait (bool | Unset):
         body (WriteRequest): 1 to 10,000 documents and deletes a request, 64 MB at most.
 
     Raises:
@@ -139,6 +156,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         name=name,
         body=body,
+        wait=wait,
     )
 
     response = client.get_httpx_client().request(
@@ -153,6 +171,7 @@ def sync(
     *,
     client: AuthenticatedClient | Client,
     body: WriteRequest,
+    wait: bool | Unset = UNSET,
 ) -> Error | WriteResult | None:
     """Write documents
 
@@ -161,10 +180,13 @@ def sync(
     answers once it's searchable here. A namespace that doesn't exist is made by the write (created:
     true in the answer): with vectors of the first vector's length and cosine when the documents have
     vectors, else text only (create it first for euclidean); past the plan's namespace count, 402
-    namespace_limit. Metered as documents written and bytes written (see Usage).
+    namespace_limit. Metered as documents written and bytes written (see Usage). With Content-Type
+    application/x-ndjson the body is one document a line (up to 16 MB; any length: POST
+    .../docs/stream).
 
     Args:
         name (str):
+        wait (bool | Unset):
         body (WriteRequest): 1 to 10,000 documents and deletes a request, 64 MB at most.
 
     Raises:
@@ -179,6 +201,7 @@ def sync(
         name=name,
         client=client,
         body=body,
+        wait=wait,
     ).parsed
 
 
@@ -187,6 +210,7 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient | Client,
     body: WriteRequest,
+    wait: bool | Unset = UNSET,
 ) -> Response[Error | WriteResult]:
     """Write documents
 
@@ -195,10 +219,13 @@ async def asyncio_detailed(
     answers once it's searchable here. A namespace that doesn't exist is made by the write (created:
     true in the answer): with vectors of the first vector's length and cosine when the documents have
     vectors, else text only (create it first for euclidean); past the plan's namespace count, 402
-    namespace_limit. Metered as documents written and bytes written (see Usage).
+    namespace_limit. Metered as documents written and bytes written (see Usage). With Content-Type
+    application/x-ndjson the body is one document a line (up to 16 MB; any length: POST
+    .../docs/stream).
 
     Args:
         name (str):
+        wait (bool | Unset):
         body (WriteRequest): 1 to 10,000 documents and deletes a request, 64 MB at most.
 
     Raises:
@@ -212,6 +239,7 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         name=name,
         body=body,
+        wait=wait,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -224,6 +252,7 @@ async def asyncio(
     *,
     client: AuthenticatedClient | Client,
     body: WriteRequest,
+    wait: bool | Unset = UNSET,
 ) -> Error | WriteResult | None:
     """Write documents
 
@@ -232,10 +261,13 @@ async def asyncio(
     answers once it's searchable here. A namespace that doesn't exist is made by the write (created:
     true in the answer): with vectors of the first vector's length and cosine when the documents have
     vectors, else text only (create it first for euclidean); past the plan's namespace count, 402
-    namespace_limit. Metered as documents written and bytes written (see Usage).
+    namespace_limit. Metered as documents written and bytes written (see Usage). With Content-Type
+    application/x-ndjson the body is one document a line (up to 16 MB; any length: POST
+    .../docs/stream).
 
     Args:
         name (str):
+        wait (bool | Unset):
         body (WriteRequest): 1 to 10,000 documents and deletes a request, 64 MB at most.
 
     Raises:
@@ -251,5 +283,6 @@ async def asyncio(
             name=name,
             client=client,
             body=body,
+            wait=wait,
         )
     ).parsed

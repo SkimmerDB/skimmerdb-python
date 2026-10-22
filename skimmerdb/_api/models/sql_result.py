@@ -1,10 +1,17 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Any, Self, TypeVar, cast
+from typing import TYPE_CHECKING, Any, Self, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+
+from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.sql_result_partials import SqlResultPartials
+    from ..models.sql_write import SqlWrite
+
 
 T = TypeVar("T", bound="SqlResult")
 
@@ -13,11 +20,12 @@ T = TypeVar("T", bound="SqlResult")
 class SqlResult:
     """
     Attributes:
-        namespace (str):
+        namespace (str): The namespace in the path ("" for /v1/sql).
         columns (list[str]):
-        types (list[str]): int, float or text, one a column.
+        types (list[str]): int, float, text, date, time, decimal (its values as strings, exact) or null (every value
+            NULL), one a column.
         rows (list[list[float | None | str]]):
-        chunks (int): Column blocks in the namespace.
+        chunks (int): Column blocks in the namespaces read.
         scanned (int): Column blocks read.
         partial (bool): Reserved for response compatibility; incomplete SQL text reads fail with 503.
         truncated (bool): More than 10,000 rows: these are the first.
@@ -28,6 +36,10 @@ class SqlResult:
         store_bytes (int): Bytes those reads fetched.
         cpu_ms (float): CPU the query used (metered, not billed).
         timed_out (bool): The query ran past the plan's time limit (query_seconds): the answer is partial.
+        dml (SqlWrite | Unset): What a SQL write did (INSERT, CREATE TABLE, DELETE).
+        partials (SqlResultPartials | Unset): Present when the query ran from per-segment partials (one namespace and
+            aggregates that merge from parts, or a view): which view's partials answered it and how many segments' partials
+            were computed for it or reused. Always exact.
     """
 
     namespace: str
@@ -44,6 +56,8 @@ class SqlResult:
     store_bytes: int
     cpu_ms: float
     timed_out: bool
+    dml: SqlWrite | Unset = UNSET
+    partials: SqlResultPartials | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -83,6 +97,14 @@ class SqlResult:
 
         timed_out = self.timed_out
 
+        dml: dict[str, Any] | Unset = UNSET
+        if not isinstance(self.dml, Unset):
+            dml = self.dml.to_dict()
+
+        partials: dict[str, Any] | Unset = UNSET
+        if not isinstance(self.partials, Unset):
+            partials = self.partials.to_dict()
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -103,11 +125,18 @@ class SqlResult:
                 "timed_out": timed_out,
             }
         )
+        if dml is not UNSET:
+            field_dict["dml"] = dml
+        if partials is not UNSET:
+            field_dict["partials"] = partials
 
         return field_dict
 
     @classmethod
     def from_dict(cls, src_dict: Mapping[str, Any]) -> Self:
+        from ..models.sql_result_partials import SqlResultPartials
+        from ..models.sql_write import SqlWrite
+
         d = dict(src_dict)
         namespace = d.pop("namespace")
 
@@ -153,6 +182,20 @@ class SqlResult:
 
         timed_out = d.pop("timed_out")
 
+        _dml = d.pop("dml", UNSET)
+        dml: SqlWrite | Unset
+        if isinstance(_dml, Unset):
+            dml = UNSET
+        else:
+            dml = SqlWrite.from_dict(_dml)
+
+        _partials = d.pop("partials", UNSET)
+        partials: SqlResultPartials | Unset
+        if isinstance(_partials, Unset):
+            partials = UNSET
+        else:
+            partials = SqlResultPartials.from_dict(_partials)
+
         sql_result = cls(
             namespace=namespace,
             columns=columns,
@@ -168,6 +211,8 @@ class SqlResult:
             store_bytes=store_bytes,
             cpu_ms=cpu_ms,
             timed_out=timed_out,
+            dml=dml,
+            partials=partials,
         )
 
         sql_result.additional_properties = d
